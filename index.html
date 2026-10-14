@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#11151c">
+<meta name="description" content="Локальный семестровый трекер учёбы">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Семестр — трекер учёбы</title>
+<style>
+:root{color-scheme:dark;--bg:#11151c;--panel:#191f29;--panel2:#202835;--line:#303a49;--text:#edf1f7;--muted:#9ba8ba;--accent:#9db9d5;--accent2:#8fb6a2;--warn:#e5bd7d;--danger:#e38e91;--radius:18px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1b2633 0,#11151c 50%);color:var(--text);font:15px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 13px}button.primary{background:#34495d;border-color:#47637c}button.good{background:#263e37;border-color:#3d6555}button.danger{background:#482b31;border-color:#70414a}button.small{padding:6px 9px;font-size:13px}button:active{transform:translateY(1px)}input,select,textarea{width:100%;background:#111720;border:1px solid var(--line);border-radius:11px;padding:10px;color:var(--text);min-width:0}input[type=checkbox]{width:auto;accent-color:var(--accent)}label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.app{max-width:1050px;margin:0 auto;padding:18px 14px 50px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:14px;background:#263746;display:grid;place-items:center;font-size:22px}.brand h1{font-size:20px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.actions{display:flex;gap:7px;flex-wrap:wrap}.tabs{display:flex;gap:6px;overflow:auto;padding:4px;margin:0 0 16px;background:#151b24;border:1px solid var(--line);border-radius:14px}.tab{border:0;background:transparent;white-space:nowrap;color:var(--muted);padding:9px 12px}.tab.active{background:#2b3948;color:var(--text)}.view{display:none}.view.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{background:linear-gradient(160deg,#1b222d,#171d26);border:1px solid var(--line);border-radius:var(--radius);padding:16px;min-width:0}.span12{grid-column:span 12}.span8{grid-column:span 8}.span7{grid-column:span 7}.span6{grid-column:span 6}.span5{grid-column:span 5}.span4{grid-column:span 4}.muted{color:var(--muted)}.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.big{font-size:30px;font-weight:750;letter-spacing:-.04em;line-height:1.2;margin:5px 0}.metricrow{display:flex;gap:10px;flex-wrap:wrap}.metric{flex:1;min-width:95px;background:#202936;border:1px solid #2d3948;border-radius:14px;padding:12px}.metric strong{display:block;font-size:21px;margin-top:4px}.progress{height:8px;background:#303946;border-radius:99px;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;background:var(--accent2);border-radius:99px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}.sectionhead h2,.card h2{font-size:17px;margin:0}.subject-list{display:grid;gap:9px}.subject{border:1px solid var(--line);border-radius:14px;padding:13px;background:#1b222c}.subject-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.subject h3{font-size:15px;margin:0 0 4px}.pill{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:99px;padding:3px 8px;color:var(--muted);font-size:11px;white-space:nowrap}.pill.ok{color:#b5d9c7;border-color:#3e6254;background:#21352e}.pill.warn{color:#f0d19d;border-color:#6d5736;background:#382f22}.pill.bad{color:#f2b7b9;border-color:#71434a;background:#3b272d}.row{display:flex;gap:9px;align-items:end;flex-wrap:wrap}.field{flex:1;min-width:120px}.field.narrow{max-width:160px}.field.tiny{max-width:100px}.formgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:10px}.formgrid .c12{grid-column:span 12}.formgrid .c8{grid-column:span 8}.formgrid .c6{grid-column:span 6}.formgrid .c4{grid-column:span 4}.formgrid .c3{grid-column:span 3}.formgrid .c2{grid-column:span 2}.days{display:flex;gap:6px;flex-wrap:wrap}.daycheck{display:flex;align-items:center;gap:5px;background:#111720;border:1px solid var(--line);border-radius:10px;padding:8px 10px;color:var(--text);font-size:13px}.daycheck label{margin:0;color:var(--text);font-size:13px}.empty{padding:22px 12px;text-align:center;color:var(--muted);border:1px dashed #3a4656;border-radius:14px}.itemlist{display:grid;gap:8px}.event{display:flex;gap:12px;align-items:flex-start;padding:11px;border:1px solid var(--line);border-radius:13px;background:#1b222c}.time{min-width:76px;color:var(--accent);font-weight:650}.eventmain{flex:1;min-width:0}.eventmain strong{display:block}.eventmain small{color:var(--muted)}.eventbuttons{display:flex;gap:5px;flex-wrap:wrap}.status{font-size:11px;padding:3px 7px;border-radius:8px;background:#2a3543;color:#b9c8d9}.status.present{background:#223a31;color:#b6dbc8}.status.absent{background:#432a30;color:#f0b4b7}.status.cancelled{background:#3b3428;color:#e6c58e}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:540px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted);font-weight:550}td strong{font-weight:650}.notice{border:1px solid #65543a;background:#2c271f;color:#e8d2a7;padding:11px 13px;border-radius:12px;font-size:13px}.footer{text-align:center;color:#6f7d8f;font-size:11px;padding:24px 0 0}.modal{position:fixed;inset:0;background:#080b10c9;display:none;align-items:center;justify-content:center;padding:14px;z-index:10}.modal.open{display:flex}.modalbox{width:min(620px,100%);max-height:90vh;overflow:auto;background:#1a212b;border:1px solid var(--line);border-radius:20px;padding:18px}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modalhead h2{font-size:18px;margin:0}.toasts{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);z-index:20;display:grid;gap:6px;width:min(92vw,420px)}.toast{background:#293746;border:1px solid #486078;border-radius:12px;padding:11px 14px;box-shadow:0 8px 28px #0006}.smalltext{font-size:12px}.calendarhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.weekstrip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.daycell{border:1px solid var(--line);border-radius:12px;padding:8px 4px;min-height:78px;background:#1a212b;text-align:center}.daycell.today{border-color:#8caecf;background:#233140}.daycell .num{font-size:17px;font-weight:700}.daycell .cnt{font-size:11px;color:var(--muted);margin-top:4px}.daycell .dots{color:var(--accent2);font-size:10px}.hidden{display:none!important}
+@media(max-width:650px){.app{padding:13px 10px 35px}.top{align-items:flex-start}.actions button{padding:8px 9px;font-size:12px}.span8,.span7,.span6,.span5,.span4{grid-column:span 12}.big{font-size:27px}.card{padding:13px}.formgrid .c8,.formgrid .c6,.formgrid .c4,.formgrid .c3,.formgrid .c2{grid-column:span 12}.field,.field.narrow,.field.tiny{max-width:none;min-width:100px}.event{gap:8px}.time{min-width:58px;font-size:13px}.weekstrip{gap:3px}.daycell{min-height:67px;padding:6px 2px}.daycell .cnt{font-size:10px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="storageWarning" class="notice" style="display:none;margin-bottom:12px">Ты открыла трекер как локальный файл. Для надёжного сохранения после закрытия браузера используй постоянную HTTPS-версию приложения. Этот режим может не поддерживать долговременное хранилище.</div>
+  <header class="top">
+    <div class="brand"><div class="logo">◷</div><div><h1>Семестр</h1><p>Твой локальный трекер учёбы</p></div></div>
+    <div class="actions"><button id="exportBtn" title="Скачать резервную копию">Экспорт</button><button id="importBtn" title="Восстановить из копии">Импорт</button><input id="importFile" type="file" accept="application/json,.json" class="hidden"></div>
+  </header>
+  <nav class="tabs">
+    <button class="tab active" data-tab="home">Обзор</button>
+    <button class="tab" data-tab="subjects">Предметы</button>
+    <button class="tab" data-tab="calendar">Дни и недели</button>
+    <button class="tab" data-tab="history">История</button>
+    <button class="tab" data-tab="settings">Настройки</button>
+  </nav>
+
+  <main>
+    <section class="view active" id="view-home">
+      <div class="grid">
+        <div class="card span8">
+          <div class="eyebrow" id="semesterLabel">Семестр</div>
+          <div class="big" id="semesterProgressText">Добавь даты семестра</div>
+          <div class="progress"><span id="semesterProgressBar" style="width:0%"></span></div>
+          <div class="muted smalltext" id="semesterDates">Укажи начало и конец в настройках</div>
+          <div class="metricrow" style="margin-top:14px">
+            <div class="metric"><span class="muted smalltext">Занятий по плану</span><strong id="totalPlan">0</strong></div>
+            <div class="metric"><span class="muted smalltext">Уже прошло</span><strong id="totalPast">0</strong></div>
+            <div class="metric"><span class="muted smalltext">Осталось</span><strong id="totalLeft">0</strong></div>
+          </div>
+        </div>
+        <div class="card span4">
+          <div class="eyebrow">Сегодня</div><div class="big" id="todayDate">—</div>
+          <div class="muted smalltext" id="todayWeek">Академическая неделя —</div>
+          <div class="progress"><span id="weekProgressBar" style="width:0%"></span></div>
+          <div class="muted smalltext" id="todaySummary">Добавь расписание, чтобы увидеть пары</div>
+          <div style="margin-top:12px"><button class="primary" id="quickAdd">+ Добавить предмет</button></div>
+        </div>
+        <div class="card span6">
+          <div class="sectionhead"><h2>Сегодняшние занятия</h2><span class="pill" id="todayCount">0 пар</span></div>
+          <div class="itemlist" id="todayEvents"></div>
+        </div>
+        <div class="card span6">
+          <div class="sectionhead"><h2>Прогресс по предметам</h2><button class="small" data-goto="subjects">Все</button></div>
+          <div class="subject-list" id="homeSubjects"></div>
+        </div>
+        <div class="card span12">
+          <div class="sectionhead"><h2>Как считать прогресс</h2></div>
+          <div class="muted smalltext">Занятие автоматически считается прошедшим после времени окончания. Вчерашние занятия учитываются, даже если посещаемость не отмечена. В истории можно изменить статус: присутствовала, пропуск, отмена или перенос. Отмена исключает занятие из проведённых и оставшихся; перенос можно отметить как отмену исходного занятия и добавить новую дату в истории.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-subjects">
+      <div class="sectionhead"><div><h2>Предметы и расписание</h2><div class="muted smalltext">Занятия повторяются каждую неделю до конца семестра.</div></div><button class="primary" id="addSubjectBtn">+ Предмет</button></div>
+      <div id="subjectList" class="subject-list"></div>
+      <div class="card" style="margin-top:13px">
+        <h2 style="margin-bottom:8px">Что считается пропуском?</h2>
+        <p class="muted smalltext">Только статус «Пропуск» увеличивает счётчик. Лимит по умолчанию — 6 на предмет. Можно поменять лимит при редактировании предмета. Неотмеченные занятия не считаются пропусками автоматически.</p>
+      </div>
+    </section>
+
+    <section class="view" id="view-calendar">
+      <div class="grid">
+        <div class="card span12">
+          <div class="calendarhead"><button id="prevWeek">←</button><div style="text-align:center"><h2 id="calendarTitle" style="margin:0">Неделя</h2><div class="muted smalltext" id="calendarSubtitle"></div></div><button id="nextWeek">→</button></div>
+          <div class="weekstrip" id="weekStrip"></div>
+        </div>
+        <div class="card span6"><div class="sectionhead"><h2>Академические недели</h2><span class="pill" id="weekCountPill">0 недель</span></div><div id="academicWeeks" class="itemlist"></div></div>
+        <div class="card span6"><div class="sectionhead"><h2>Сводка по дням недели</h2></div><div id="weekdayStats" class="itemlist"></div></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-history">
+      <div class="sectionhead"><div><h2>История занятий</h2><div class="muted smalltext">Меняй посещаемость, отменяй занятие или добавляй перенос.</div></div><button class="primary" id="addEventBtn">+ Занятие</button></div>
+      <div class="row" style="margin-bottom:12px">
+        <div class="field"><label for="historySubjectFilter">Предмет</label><select id="historySubjectFilter"><option value="">Все предметы</option></select></div>
+        <div class="field"><label for="historyStatusFilter">Статус</label><select id="historyStatusFilter"><option value="">Все статусы</option><option value="scheduled">Не отмечено</option><option value="present">Была</option><option value="absent">Пропуск</option><option value="cancelled">Отмена</option></select></div>
+        <div class="field"><label for="historyDateFilter">Дата от</label><input id="historyDateFilter" type="date"></div>
+      </div>
+      <div class="card"><div id="historyList" class="itemlist"></div></div>
+    </section>
+
+    <section class="view" id="view-settings">
+      <div class="grid">
+        <div class="card span6">
+          <h2 style="margin-bottom:13px">Настройки семестра</h2>
+          <div class="formgrid">
+            <div class="c12"><label for="semName">Название</label><input id="semName" placeholder="Например, осенний семестр 2026"></div>
+            <div class="c6"><label for="semStart">Первый день семестра</label><input id="semStart" type="date"></div>
+            <div class="c6"><label for="semEnd">Последний день семестра</label><input id="semEnd" type="date"></div>
+            <div class="c6"><label for="weekStart">Начало академической недели</label><select id="weekStart"><option value="1">Понедельник</option><option value="0">Воскресенье</option></select></div>
+            <div class="c6"><label for="defaultLimit">Лимит пропусков по умолчанию</label><input id="defaultLimit" type="number" min="0" max="99" value="6"></div>
+            <div class="c12"><button class="primary" id="saveSettings">Сохранить настройки</button></div>
+          </div>
+        </div>
+        <div class="card span6">
+          <h2 style="margin-bottom:10px">Данные и приватность</h2>
+          <p class="muted smalltext">Данные хранятся локально в браузере на этом устройстве через локальное хранилище и IndexedDB. Никакой аккаунт не нужен. Очистка данных браузера может удалить трекер — периодически сохраняй резервную копию через «Экспорт».</p>
+          <div class="row"><button id="exportBtn2">Скачать резервную копию</button><button class="danger" id="resetBtn">Удалить все данные</button></div>
+          <div class="notice" style="margin-top:12px">При открытии как file:// долговременное хранение зависит от браузера. Для надёжного сохранения используй HTTPS-версию. Это веб-приложение, а не нативный Android-виджет. Его можно открыть в браузере и добавить ярлык на главный экран. Автообновление происходит, когда страница открыта; системный виджет потребует отдельной Android-реализации.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="footer">Семестр · офлайн-трекер · данные остаются на устройстве</div>
+</div>
+
+<div class="modal" id="subjectModal">
+ <div class="modalbox">
+  <div class="modalhead"><h2 id="subjectModalTitle">Новый предмет</h2><button data-close="subjectModal">✕</button></div>
+  <form id="subjectForm">
+   <input type="hidden" id="subjectId">
+   <div class="formgrid">
+    <div class="c8"><label for="subjectName">Название предмета *</label><input id="subjectName" required placeholder="Например, транзактный анализ"></div>
+    <div class="c4"><label for="subjectColor">Метка</label><select id="subjectColor"><option value="yellow">Жёлтая</option><option value="green">Зелёная</option><option value="sky">Голубая</option><option value="pink">Нежно-розовая</option><option value="lilac">Лиловая</option><option value="orange">Оранжевая</option><option value="blue">Сине-фиолетовая</option><option value="sand">Песочная</option><option value="mint">Мятная</option><option value="coral">Коралловая</option></select></div>
+    <div class="c12"><div class="sectionhead"><label style="margin:0">Расписание (каждая строка — отдельная пара)</label><button type="button" class="small" id="addScheduleRow">+ Добавить пару</button></div><div id="scheduleRows" class="itemlist"></div><div class="muted smalltext" style="margin-top:6px">Можно добавить две пары в один день и указать разные аудитории для разных дней.</div></div>
+    <div class="c6"><label for="subjectLimit">Лимит пропусков</label><input id="subjectLimit" type="number" min="0" max="99" value="6" required></div>
+    <div class="c12"><label for="subjectNote">Заметка (необязательно)</label><input id="subjectNote" placeholder="Преподаватель, корпус и т. п."></div>
+    <div class="c12 row"><button class="primary" type="submit">Сохранить предмет</button><button type="button" data-close="subjectModal">Отмена</button></div>
+   </div>
+  </form>
+ </div>
+</div>
+
+<div class="modal" id="eventModal">
+ <div class="modalbox">
+  <div class="modalhead"><h2 id="eventModalTitle">Занятие</h2><button data-close="eventModal">✕</button></div>
+  <form id="eventForm">
+   <input type="hidden" id="eventId">
+   <div class="formgrid">
+    <div class="c12"><label for="eventSubject">Предмет *</label><select id="eventSubject" required></select></div>
+    <div class="c6"><label for="eventDate">Дата *</label><input id="eventDate" type="date" required></div>
+    <div class="c6"><label for="eventStatus">Статус</label><select id="eventStatus"><option value="scheduled">По расписанию / не отмечено</option><option value="present">Была</option><option value="absent">Пропуск</option><option value="cancelled">Отмена</option></select></div>
+    <div class="c6"><label for="eventStart">Начало</label><input id="eventStart" type="time" value="09:00" required></div>
+    <div class="c6"><label for="eventEnd">Конец</label><input id="eventEnd" type="time" value="10:30" required></div>
+    <div class="c6"><label for="eventRoom">Аудитория для этой пары</label><input id="eventRoom" placeholder="Например, 312"></div><div class="c6"><label for="eventNote">Заметка</label><input id="eventNote" placeholder="Перенос, причина отмены и т. п."></div>
+    <div class="c12 row"><button class="primary" type="submit">Сохранить занятие</button><button type="button" data-close="eventModal">Отмена</button></div>
+   </div>
+  </form>
+ </div>
+</div>
+<div class="toasts" id="toasts"></div>
+<script>
+(()=> {
+'use strict';
+const KEY='semesterTracker.v1';
+const dayNames=['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+const shortDays=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+const colors={yellow:'#e2c86f',green:'#8fb99b',sky:'#91c8df',pink:'#e7b8ca',lilac:'#c1a0dc',orange:'#e6a064',blue:'#9a9ee8',sand:'#d4b98c',mint:'#7dc7b5',coral:'#df918a'};
+const colorNames={yellow:'Жёлтая',green:'Зелёная',sky:'Голубая',pink:'Нежно-розовая',lilac:'Лиловая',orange:'Оранжевая',blue:'Сине-фиолетовая',sand:'Песочная',mint:'Мятная',coral:'Коралловая'};
+let idb=null;
+function openDB(){return new Promise((resolve)=>{if(!('indexedDB' in window)){resolve(null);return}try{let req=indexedDB.open('SemesterTrackerDB',1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('state'))req.result.createObjectStore('state')};req.onsuccess=()=>resolve(req.result);req.onerror=()=>resolve(null)}catch(e){resolve(null)}})}
+function idbGet(){return new Promise(resolve=>{if(!idb){resolve(null);return}try{let r=idb.transaction('state','readonly').objectStore('state').get('main');r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>resolve(null)}catch(e){resolve(null)}})}
+function idbPut(value){return new Promise(resolve=>{if(!idb){resolve(false);return}try{let tx=idb.transaction('state','readwrite');tx.objectStore('state').put(value,'main');tx.oncomplete=()=>resolve(true);tx.onerror=()=>resolve(false);tx.onabort=()=>resolve(false)}catch(e){resolve(false)}})}
+const statusNames={scheduled:'Не отмечено',present:'Была',absent:'Пропуск',cancelled:'Отмена'};
+let state=load();
+let calendarOffset=0;
+let activeTab='home';
+function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function dateFrom(s){if(!s)return null;let [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12)}
+function todayISO(){return iso(new Date())}
+function fmtDate(s,opts={day:'numeric',month:'short'}){let d=dateFrom(s);return d?new Intl.DateTimeFormat('ru-RU',opts).format(d):'—'}
+function fmtLong(s){return fmtDate(s,{day:'numeric',month:'long',year:'numeric'})}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function uid(){return Math.random().toString(36).slice(2,10)+Date.now().toString(36)}
+function emptyState(){return {settings:{name:'Мой семестр',start:'',end:'',weekStart:1,defaultLimit:6},subjects:[],events:[]}}
+function validState(s){return !!(s&&s.settings&&Array.isArray(s.subjects)&&Array.isArray(s.events))}
+function load(){try{let s=JSON.parse(localStorage.getItem(KEY));if(validState(s))return s}catch(e){}return emptyState()}
+function save(){let raw=JSON.stringify(state);let localOK=false;try{localStorage.setItem(KEY,raw);localOK=true}catch(e){}idbPut(state).then(ok=>{const warn=document.getElementById('storageWarning');if(warn&&location.protocol==='file:')warn.style.display='block';});render();if(!localOK&&location.protocol!=='file:')toast('Браузер не разрешил локальное сохранение. Экспортируй резервную копию.')}
+function toast(msg){let el=document.createElement('div');el.className='toast';el.textContent=msg;document.getElementById('toasts').append(el);setTimeout(()=>el.remove(),3000)}
+function daysBetween(a,b){return Math.round((dateFrom(b)-dateFrom(a))/86400000)}
+function timeMin(t){if(!t||!t.includes(':'))return 0;let [h,m]=t.split(':').map(Number);return h*60+m}
+function sortEvents(a,b){return a.date.localeCompare(b.date)||a.start.localeCompare(b.start)}
+function subject(id){return state.subjects.find(s=>s.id===id)}
+function subjectEvents(id){return state.events.filter(e=>e.subjectId===id)}
+function withinSemester(d){return (!state.settings.start||d>=state.settings.start)&&(!state.settings.end||d<=state.settings.end)}
+function getSchedules(s){if(Array.isArray(s.schedules)&&s.schedules.length)return s.schedules;return (s.days||[]).map(day=>({day,start:s.start||'09:00',end:s.end||'10:30',room:s.room||''}))}
+function generateEvents(){
+ const {start,end}=state.settings;if(!start||!end||start>end)return [];
+ const existing=new Set(state.events.map(e=>`${e.subjectId}|${e.date}|${e.start}`));let generated=[];const a=dateFrom(start),b=dateFrom(end);
+ for(let d=new Date(a);d<=b;d.setDate(d.getDate()+1)){const ds=iso(d),dow=d.getDay();for(const s of state.subjects){for(const slot of getSchedules(s)){if(Number(slot.day)!==dow)continue;const key=`${s.id}|${ds}|${slot.start}`;if(!existing.has(key)){generated.push({id:uid(),subjectId:s.id,date:ds,start:slot.start,end:slot.end,room:slot.room||'',status:'scheduled',note:'',generated:true});existing.add(key)}}}}
+ return generated
+}
+function ensureEvents(){let g=generateEvents();if(g.length){state.events.push(...g);state.events.sort(sortEvents);localStorage.setItem(KEY,JSON.stringify(state))}}
+function allPlanEvents(){ensureEvents();return state.events.filter(e=>withinSemester(e.date)).sort(sortEvents)}
+function plannedForSubject(id){return allPlanEvents().filter(e=>e.subjectId===id&&e.status!=='cancelled')}
+function counts(id=null){
+ const now=new Date(),today=todayISO(),events=id?plannedForSubject(id):allPlanEvents();
+ let past=0,future=0,held=0,absent=0,present=0,unmarked=0;
+ events.forEach(e=>{
+  let endTime=new Date(`${e.date}T${e.end||'23:59'}:00`);
+  const isPast=endTime.getTime()<=now.getTime();
+  if(isPast){past++;if(e.status==='present')present++;else if(e.status==='scheduled')unmarked++}
+  else future++;
+  if(e.status==='absent')absent++;
+  if(e.status==='present')held++;
+ });
+ return {plan:events.length,past,future,absent,present,held,unmarked};
+}
+function semProgress(){
+ let s=state.settings.start,e=state.settings.end;if(!s||!e||s>e)return {pct:0,elapsed:0,total:0,left:null};
+ let total=daysBetween(s,e)+1,elapsed=Math.max(0,Math.min(total,daysBetween(s,todayISO())+1));
+ return {pct:Math.round(elapsed/total*100),elapsed,total,left:Math.max(0,daysBetween(todayISO(),e))}
+}
+function acadWeek(dateStr){
+ const start=dateFrom(state.settings.start||dateStr),d=dateFrom(dateStr);
+ if(!start||d<start)return 0;
+ let ws=Number(state.settings.weekStart??1);
+ const shift=(start.getDay()-ws+7)%7;
+ let first=new Date(start);first.setDate(first.getDate()-shift);
+ return Math.floor((d-first)/604800000)+1;
+}
+function eventsOn(dateStr){return allPlanEvents().filter(e=>e.date===dateStr&&e.status!=='cancelled').sort((a,b)=>a.start.localeCompare(b.start))}
+function eventStatusClass(s){return s==='present'?'present':s==='absent'?'absent':s==='cancelled'?'cancelled':''}
+function eventHtml(e,compact=false){
+ const s=subject(e.subjectId);let status=e.status||'scheduled';
+ return `<div class="event"><div class="time">${esc(e.start)}<br><span class="muted smalltext">${esc(e.end)}</span></div><div class="eventmain"><strong>${esc(s?.name||'Удалённый предмет')}</strong><small>${esc((e.room||s?.room)?`Ауд. ${e.room||s.room} · `:'')}${esc(fmtLong(e.date))}${e.note?' · '+esc(e.note):''}</small><div style="margin-top:5px"><span class="status ${eventStatusClass(status)}">${esc(statusNames[status]||status)}</span></div></div><div class="eventbuttons">${compact?'':`<button class="small" data-edit-event="${e.id}">Изменить</button>`}<button class="small" data-cycle-event="${e.id}" title="Быстро переключить статус">Статус</button></div></div>`
+}
+function subjectCard(s,compact=false){
+ let c=counts(s.id),limit=Number(s.limit??6),left=Math.max(0,limit-c.absent),pct=c.plan?Math.round(c.past/c.plan*100):0;
+ let pill=left===0?'bad':left<=1?'warn':'ok';
+ return `<div class="subject"><div class="subject-top"><div><h3 style="color:${colors[s.color]||colors.blue}">${esc(s.name)}</h3><div class="muted smalltext">${[...new Set(getSchedules(s).map(x=>Number(x.day)))].sort((a,b)=>a-b).map(d=>shortDays[d]).join(' · ')||'Без повторяющегося расписания'} · ${getSchedules(s).length} ${plural(getSchedules(s).length,'тип пары','типа пар','типов пар')}</div></div><span class="pill ${pill}">Пропуски ${c.absent}/${limit}</span></div><div class="progress"><span style="width:${pct}%;background:${colors[s.color]||colors.blue}"></span></div><div class="row" style="justify-content:space-between;align-items:center"><span class="muted smalltext">${c.past} прошло · ${c.future} осталось из ${c.plan}</span><span class="smalltext ${left<=1?'':'muted'}">${left} допустимо</span></div>${compact?'':`<div class="row" style="margin-top:10px"><button class="small" data-edit-subject="${s.id}">Изменить</button><button class="small" data-add-subject-event="${s.id}">Добавить занятие</button><button class="small danger" data-delete-subject="${s.id}">Удалить</button></div>`}</div>`
+}
+function renderHome(){
+ const p=semProgress(),c=counts();
+ document.getElementById('semesterLabel').textContent=state.settings.name||'Семестр';
+ document.getElementById('semesterProgressText').textContent=state.settings.start&&state.settings.end?`${p.pct}% семестра`:'Добавь даты семестра';
+ document.getElementById('semesterProgressBar').style.width=p.pct+'%';
+ document.getElementById('semesterDates').textContent=state.settings.start&&state.settings.end?`${fmtLong(state.settings.start)} — ${fmtLong(state.settings.end)} · ${p.left===0?'Семестр завершён':`осталось ${p.left} дн.`}`:'Укажи начало и конец в настройках';
+ document.getElementById('totalPlan').textContent=c.plan;document.getElementById('totalPast').textContent=c.past;document.getElementById('totalLeft').textContent=c.future;
+ const now=new Date(),ds=todayISO();document.getElementById('todayDate').textContent=new Intl.DateTimeFormat('ru-RU',{weekday:'short',day:'numeric',month:'short'}).format(now);
+ document.getElementById('todayWeek').textContent=`Академическая неделя ${state.settings.start?acadWeek(ds):'—'}`;
+ let weekEvents=allPlanEvents().filter(e=>e.date===ds&&e.status!=='cancelled');
+ let weekDone=weekEvents.filter(e=>new Date(`${e.date}T${e.end}:00`)<now).length;
+ document.getElementById('weekProgressBar').style.width=(weekEvents.length?weekDone/weekEvents.length*100:0)+'%';
+ document.getElementById('todaySummary').textContent=weekEvents.length?`${weekDone} из ${weekEvents.length} пар завершено`:'По расписанию пар нет';
+ document.getElementById('todayCount').textContent=`${weekEvents.length} ${plural(weekEvents.length,'пара','пары','пар')}`;
+ document.getElementById('todayEvents').innerHTML=weekEvents.length?weekEvents.map(e=>eventHtml(e,true)).join(''):'<div class="empty">Сегодня занятий нет 🎧</div>';
+ document.getElementById('homeSubjects').innerHTML=state.subjects.length?state.subjects.map(s=>subjectCard(s,true)).join(''):'<div class="empty">Добавь первый предмет и дни занятий.</div>';
+}
+function plural(n,a,b,c){let x=n%10,y=n%100;return y>=11&&y<=14?c:x===1?a:x>=2&&x<=4?b:c}
+function renderSubjects(){
+ document.getElementById('subjectList').innerHTML=state.subjects.length?state.subjects.map(s=>subjectCard(s)).join(''):'<div class="empty">Пока нет предметов. Добавь предмет, выбери дни недели и время пары — трекер рассчитает занятия между датами семестра.</div>';
+}
+function startOfWeek(d,weekStart=Number(state.settings.weekStart??1)){let x=new Date(d);x.setHours(12,0,0,0);x.setDate(x.getDate()-((x.getDay()-weekStart+7)%7));return x}
+function renderCalendar(){
+ const base=dateFrom(todayISO());base.setDate(base.getDate()+calendarOffset*7);const start=startOfWeek(base),end=new Date(start);end.setDate(end.getDate()+6);
+ document.getElementById('calendarTitle').textContent=`${fmtDate(iso(start))} — ${fmtDate(iso(end))}`;
+ document.getElementById('calendarSubtitle').textContent=`Академическая неделя ${state.settings.start?acadWeek(iso(start)):'—'}`;
+ let days=[];for(let i=0;i<7;i++){let d=new Date(start);d.setDate(start.getDate()+i);days.push(d)}
+ document.getElementById('weekStrip').innerHTML=days.map(d=>{let ds=iso(d),ev=eventsOn(ds),past=ev.filter(e=>new Date(`${e.date}T${e.end}:00`)<new Date()).length;return `<div class="daycell ${ds===todayISO()?'today':''}"><div class="muted smalltext">${shortDays[d.getDay()]}</div><div class="num">${d.getDate()}</div><div class="cnt">${ev.length} ${plural(ev.length,'пара','пары','пар')}</div><div class="dots">${ev.length?`${past} ✓`:''}</div></div>`}).join('');
+ let weeks=[];
+ if(state.settings.start&&state.settings.end&&state.settings.start<=state.settings.end){
+  let cur=startOfWeek(dateFrom(state.settings.start));let endDate=dateFrom(state.settings.end);let i=1;
+  while(cur<=endDate&&i<60){let a=iso(cur),b=new Date(cur);b.setDate(b.getDate()+6);let bs=iso(b);let ev=allPlanEvents().filter(e=>e.date>=a&&e.date<=bs&&e.status!=='cancelled');let done=ev.filter(e=>new Date(`${e.date}T${e.end}:00`)<new Date()).length;let isCurrent=todayISO()>=a&&todayISO()<=bs;weeks.push({i,a,b:bs,n:ev.length,done,isCurrent});cur.setDate(cur.getDate()+7);i++}
+ }
+ document.getElementById('weekCountPill').textContent=`${weeks.length} ${plural(weeks.length,'неделя','недели','недель')}`;
+ document.getElementById('academicWeeks').innerHTML=weeks.length?weeks.map(w=>`<div class="event" style="${w.isCurrent?'border-color:#8caecf':''}"><div class="time">Неделя ${w.i}</div><div class="eventmain"><strong>${fmtDate(w.a)} — ${fmtDate(w.b)}</strong><small>${w.done} из ${w.n} занятий завершено</small><div class="progress"><span style="width:${w.n?Math.min(100,w.done/w.n*100):0}%"></span></div></div><span class="pill">${w.isCurrent?'Сейчас':''}</span></div>`).join(''):'<div class="empty">Укажи даты семестра в настройках.</div>';
+ let stats=shortDays.map((n,d)=>{let ev=allPlanEvents().filter(e=>dateFrom(e.date).getDay()===d&&e.status!=='cancelled');let past=ev.filter(e=>new Date(`${e.date}T${e.end}:00`)<new Date()).length;return {n,d,total:ev.length,past}}).sort((a,b)=>((a.d-Number(state.settings.weekStart??1)+7)%7)-((b.d-Number(state.settings.weekStart??1)+7)%7));
+ document.getElementById('weekdayStats').innerHTML=stats.map(x=>`<div class="event"><div class="time">${dayNames[x.d]}</div><div class="eventmain"><strong>${x.total} занятий за семестр</strong><small>${x.past} прошло · ${x.total-x.past} осталось</small><div class="progress"><span style="width:${x.total?x.past/x.total*100:0}%"></span></div></div></div>`).join('');
+}
+function renderHistory(){
+ let sf=document.getElementById('historySubjectFilter').value,st=document.getElementById('historyStatusFilter').value,df=document.getElementById('historyDateFilter').value;
+ let ev=allPlanEvents().filter(e=>(!sf||e.subjectId===sf)&&(!st||e.status===st)&&(!df||e.date>=df)).sort((a,b)=>sortEvents(b,a));
+ document.getElementById('historyList').innerHTML=ev.length?ev.map(e=>eventHtml(e)).join(''):'<div class="empty">Занятий по этому фильтру нет.</div>';
+}
+function renderFilters(){
+ let old=document.getElementById('historySubjectFilter').value;
+ document.getElementById('historySubjectFilter').innerHTML='<option value="">Все предметы</option>'+state.subjects.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+ document.getElementById('historySubjectFilter').value=state.subjects.some(s=>s.id===old)?old:'';
+ document.getElementById('eventSubject').innerHTML=state.subjects.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+ document.getElementById('eventSubject').disabled=!state.subjects.length;
+}
+function renderSettings(){
+ document.getElementById('semName').value=state.settings.name||'';document.getElementById('semStart').value=state.settings.start||'';document.getElementById('semEnd').value=state.settings.end||'';document.getElementById('weekStart').value=String(state.settings.weekStart??1);document.getElementById('defaultLimit').value=state.settings.defaultLimit??6;
+}
+function render(){renderFilters();renderHome();renderSubjects();renderCalendar();renderHistory();renderSettings()}
+function showTab(tab){activeTab=tab;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+tab));}
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function addScheduleRow(slot={day:1,start:'09:00',end:'10:30',room:''}){const host=document.getElementById('scheduleRows');const row=document.createElement('div');row.className='event schedule-row';row.innerHTML=`<div style="flex:1;min-width:100%;"><div class="formgrid"><div class="c3"><label>День</label><select class="slot-day">${[[1,'Понедельник'],[2,'Вторник'],[3,'Среда'],[4,'Четверг'],[5,'Пятница'],[6,'Суббота'],[0,'Воскресенье']].map(([v,n])=>`<option value="${v}">${n}</option>`).join('')}</select></div><div class="c3"><label>Начало</label><input class="slot-start" type="time" required></div><div class="c3"><label>Конец</label><input class="slot-end" type="time" required></div><div class="c3"><label>Аудитория</label><input class="slot-room" placeholder="106"></div></div></div><button type="button" class="small danger remove-slot">×</button>`;row.querySelector('.slot-day').value=String(slot.day);row.querySelector('.slot-start').value=slot.start||'09:00';row.querySelector('.slot-end').value=slot.end||'10:30';row.querySelector('.slot-room').value=slot.room||'';row.querySelector('.remove-slot').addEventListener('click',()=>{row.remove()});host.append(row)}
+function collectSchedules(){return [...document.querySelectorAll('#scheduleRows .schedule-row')].map(row=>({day:Number(row.querySelector('.slot-day').value),start:row.querySelector('.slot-start').value,end:row.querySelector('.slot-end').value,room:row.querySelector('.slot-room').value.trim()}))}
+function resetSubjectForm(){document.getElementById('subjectForm').reset();document.getElementById('subjectId').value='';document.getElementById('subjectModalTitle').textContent='Новый предмет';document.getElementById('subjectLimit').value=state.settings.defaultLimit??6;document.getElementById('scheduleRows').innerHTML='';addScheduleRow();}
+function editSubject(id){let s=subject(id);if(!s)return;resetSubjectForm();document.getElementById('subjectId').value=s.id;document.getElementById('subjectName').value=s.name;document.getElementById('subjectColor').value=s.color||'blue';document.getElementById('subjectLimit').value=s.limit??6;document.getElementById('subjectNote').value=s.note||'';document.getElementById('scheduleRows').innerHTML='';getSchedules(s).forEach(slot=>addScheduleRow(slot));document.getElementById('subjectModalTitle').textContent='Изменить предмет';openModal('subjectModal')}
+
+function newSubject(){resetSubjectForm();openModal('subjectModal')}
+function openEvent(id=null,subjectId=null,date=null){
+ if(!state.subjects.length){toast('Сначала добавь предмет.');showTab('subjects');return}
+ document.getElementById('eventForm').reset();document.getElementById('eventId').value='';
+ document.getElementById('eventDate').value=date||todayISO();document.getElementById('eventStatus').value='scheduled';document.getElementById('eventStart').value='09:00';document.getElementById('eventEnd').value='10:30';document.getElementById('eventNote').value='';document.getElementById('eventRoom').value='';
+ if(subjectId)document.getElementById('eventSubject').value=subjectId;
+ if(id){let e=state.events.find(x=>x.id===id);if(!e)return;document.getElementById('eventId').value=e.id;document.getElementById('eventSubject').value=e.subjectId;document.getElementById('eventDate').value=e.date;document.getElementById('eventStatus').value=e.status||'scheduled';document.getElementById('eventStart').value=e.start;document.getElementById('eventEnd').value=e.end;document.getElementById('eventNote').value=e.note||'';document.getElementById('eventRoom').value=e.room||'';document.getElementById('eventModalTitle').textContent='Изменить занятие'}else document.getElementById('eventModalTitle').textContent='Добавить занятие';
+ openModal('eventModal')
+}
+function cycleEvent(id){let e=state.events.find(x=>x.id===id);if(!e)return;let order=['scheduled','present','absent','cancelled'];e.status=order[(order.indexOf(e.status||'scheduled')+1)%order.length];save();toast(`Статус: ${statusNames[e.status]}`)}
+function deleteSubject(id){
+ let s=subject(id);if(!s)return;if(!confirm(`Удалить предмет «${s.name}» и все его занятия? Это нельзя отменить.`))return;
+ state.subjects=state.subjects.filter(x=>x.id!==id);state.events=state.events.filter(e=>e.subjectId!==id);save();toast('Предмет удалён.')
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.goto)));
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
+document.getElementById('addSubjectBtn').addEventListener('click',newSubject);document.getElementById('quickAdd').addEventListener('click',()=>{showTab('subjects');newSubject()});
+document.getElementById('addEventBtn').addEventListener('click',()=>openEvent());
+document.getElementById('prevWeek').addEventListener('click',()=>{calendarOffset--;renderCalendar()});document.getElementById('nextWeek').addEventListener('click',()=>{calendarOffset++;renderCalendar()});
+document.getElementById('historySubjectFilter').addEventListener('change',renderHistory);document.getElementById('historyStatusFilter').addEventListener('change',renderHistory);document.getElementById('historyDateFilter').addEventListener('change',renderHistory);
+document.getElementById('addScheduleRow').addEventListener('click',()=>addScheduleRow({day:1,start:'09:00',end:'10:30',room:''}));
+document.getElementById('subjectForm').addEventListener('submit',e=>{
+ e.preventDefault();let id=document.getElementById('subjectId').value;let schedules=collectSchedules();
+ if(schedules.some(x=>!x.start||!x.end||timeMin(x.end)<=timeMin(x.start))){toast('У каждой пары время окончания должно быть позже начала.');return}
+ if(!schedules.length){toast('Добавь хотя бы одну строку расписания.');return}
+ let obj={id:id||uid(),name:document.getElementById('subjectName').value.trim(),color:document.getElementById('subjectColor').value,schedules,days:[...new Set(schedules.map(x=>x.day))],start:schedules[0].start,end:schedules[0].end,room:schedules[0].room,limit:Math.max(0,Number(document.getElementById('subjectLimit').value)||0),note:document.getElementById('subjectNote').value.trim()};
+ if(!obj.name){toast('Введи название предмета.');return}
+ if(id){let ix=state.subjects.findIndex(s=>s.id===id);if(ix>=0)state.subjects[ix]=obj;
+  // Keep recorded attendance/status; update only untouched generated future lessons to match changed schedule.
+  const slots=new Map(schedules.map(x=>[`${x.day}|${x.start}`,x]));
+  state.events.forEach(ev=>{if(ev.subjectId!==id||!ev.generated||ev.status!=='scheduled')return;let dow=dateFrom(ev.date).getDay(),slot=slots.get(`${dow}|${ev.start}`);if(slot){ev.end=slot.end;ev.room=slot.room||''}else ev.status='cancelled'});
+ }else state.subjects.push(obj);
+ closeModal('subjectModal');save();toast('Предмет сохранён.');
+});
+document.getElementById('eventForm').addEventListener('submit',e=>{
+ e.preventDefault();let id=document.getElementById('eventId').value,subId=document.getElementById('eventSubject').value,date=document.getElementById('eventDate').value,start=document.getElementById('eventStart').value,end=document.getElementById('eventEnd').value;
+ if(!subId){toast('Выбери предмет.');return}if(timeMin(end)<=timeMin(start)){toast('Время окончания должно быть позже начала.');return}
+ let obj={id:id||uid(),subjectId:subId,date,start,end,status:document.getElementById('eventStatus').value,note:document.getElementById('eventNote').value.trim(),room:document.getElementById('eventRoom').value.trim(),generated:false};
+ if(id){let ix=state.events.findIndex(x=>x.id===id);if(ix>=0)state.events[ix]=obj}else state.events.push(obj);
+ state.events.sort(sortEvents);closeModal('eventModal');save();toast('Занятие сохранено.')
+});
+document.body.addEventListener('click',e=>{
+ let b=e.target.closest('[data-edit-subject]');if(b){editSubject(b.dataset.editSubject);return}
+ b=e.target.closest('[data-delete-subject]');if(b){deleteSubject(b.dataset.deleteSubject);return}
+ b=e.target.closest('[data-add-subject-event]');if(b){openEvent(null,b.dataset.addSubjectEvent);return}
+ b=e.target.closest('[data-edit-event]');if(b){openEvent(b.dataset.editEvent);return}
+ b=e.target.closest('[data-cycle-event]');if(b){cycleEvent(b.dataset.cycleEvent);return}
+});
+document.getElementById('saveSettings').addEventListener('click',()=>{
+ let start=document.getElementById('semStart').value,end=document.getElementById('semEnd').value;if(start&&end&&start>end){toast('Конец семестра не может быть раньше начала.');return}
+ state.settings={name:document.getElementById('semName').value.trim()||'Мой семестр',start,end,weekStart:Number(document.getElementById('weekStart').value),defaultLimit:Math.max(0,Number(document.getElementById('defaultLimit').value)||0)};
+ state.subjects.forEach(s=>{if(s.limit===undefined)s.limit=state.settings.defaultLimit});
+ save();toast('Настройки сохранены.')
+});
+function exportData(){let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`semester-tracker-${todayISO()}.json`;a.click();URL.revokeObjectURL(url);toast('Резервная копия подготовлена.')}
+document.getElementById('exportBtn').addEventListener('click',exportData);document.getElementById('exportBtn2').addEventListener('click',exportData);
+document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let s=JSON.parse(await f.text());if(!s.settings||!Array.isArray(s.subjects)||!Array.isArray(s.events))throw Error('bad');if(!confirm('Заменить текущие данные данными из резервной копии?'))return;state=s;save();toast('Данные восстановлены.')}catch(err){toast('Не удалось прочитать файл резервной копии.')}finally{e.target.value=''}});
+document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('Точно удалить все предметы, занятия и настройки? Сначала скачай резервную копию, если она нужна.')){localStorage.removeItem(KEY);state=load();calendarOffset=0;save();toast('Все данные удалены.')}});
+window.addEventListener('focus',render);document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
+if(location.protocol==='file:')document.getElementById('storageWarning').style.display='block';
+(async()=>{idb=await openDB();if(location.protocol!=='file:'&&navigator.storage&&navigator.storage.persist){try{await navigator.storage.persist()}catch(e){}}if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('./sw.js').catch(()=>{})}const stored=await idbGet();if(stored&&validState(stored)){const current=load();if(!current.subjects.length&&!current.events.length&&stored.subjects?.length){state=stored;try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}}render();if(location.protocol==='file:')toast('Локальный файл может не сохранять данные надёжно. Для постоянного хранения используй HTTPS-версию.');})();
+render();
+})();
+</script>
+</body>
+</html>

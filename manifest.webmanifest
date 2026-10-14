@@ -1,0 +1,12 @@
+{
+  "name": "Семестр — трекер учёбы",
+  "short_name": "Семестр",
+  "description": "Локальный трекер семестра, расписания и пропусков",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#11151c",
+  "theme_color": "#11151c",
+  "lang": "ru",
+  "icons": []
+}
